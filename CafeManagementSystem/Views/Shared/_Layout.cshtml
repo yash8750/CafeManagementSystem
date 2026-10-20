@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cafe Management</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CafeManagementSystem.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+
+</head>
+
+<body class="cafe-app">
+    <div class="app-wrapper">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <a class="brand"asp-controller="Dashboard"asp-action="Index">
+                <span class="brand-icon">☕</span>
+                <span>
+                    <strong>Cafe</strong>
+                    <small>MANAGEMENT SYSTEM</small>
+                </span>
+            </a>
+
+            <div class="sidebar-label">MAIN MENU</div>
+            <nav class="sidebar-nav">
+
+                <a class="sidebar-link"asp-controller="Dashboard"asp-action="Index">
+                    <span class="nav-icon">▦</span>Dashboard</a>
+
+                <a class="sidebar-link"asp-controller="Menu"asp-action="Index">
+                    <span class="nav-icon">☕</span>Menu Management</a>
+
+                <a class="sidebar-link"asp-controller="Categories"asp-action="Index">
+                    <span class="nav-icon">▤</span>Categories</a>
+
+                <a class="sidebar-link"asp-controller="Tables"asp-action="Index">
+                    <span class="nav-icon">▦</span>Table Management</a>
+
+                <a class="sidebar-link"asp-controller="Customers"asp-action="Index">
+                    <span class="nav-icon">♙</span>Customers</a>
+
+                <a class="sidebar-link"asp-controller="Orders"asp-action="Index">
+                    <span class="nav-icon">🛒</span>Orders</a>
+
+                <div class="sidebar-label mt-4">OPERATIONS</div>
+
+                <a class="sidebar-link"asp-controller="Kitchen"asp-action="Index">
+                    <span class="nav-icon">♨</span>Kitchen</a>
+
+                <a class="sidebar-link"asp-controller="Billing"asp-action="Index">
+                    <span class="nav-icon">▧</span>Billing & Invoices</a>
+
+                <a class="sidebar-link"asp-controller="Payments"asp-action="Index">
+                    <span class="nav-icon">₹</span>Payments</a>
+
+                <a class="sidebar-link"asp-controller="Reports"asp-action="Index">
+                    <span class="nav-icon">▥</span>Sales Reports</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-footer-icon">☕</div>
+
+                <div>
+                    <strong>Cafe Admin</strong>
+                    <small>Management Portal</small>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Main content -->
+        <div class="main-area">
+
+            <!-- Top navigation -->
+            <header class="topbar">
+
+                <button class="menu-toggle"type="button"id="sidebarToggle"aria-label="Toggle navigation">☰</button>
+
+                <div class="topbar-title"><span class="topbar-eyebrow">CAFE MANAGEMENT</span><h6>@ViewData["Title"]</h6></div>
+
+                <div class="topbar-right">
+                    <span class="status-dot"></span>
+                    <span class="system-status">System Online</span>
+                    <div class="admin-avatar">A</div>
+                </div>
+
+            </header>
+
+            <!-- Page content -->
+            <main class="page-content" role="main">@RenderBody()</main>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <span>© 2026 Cafe Management System</span>
+                <span>Made for better cafe operations ☕</span>
+            </footer>
+
+        </div>
+
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5eee7, #e6d3c3);
+    font-family: Arial, sans-serif;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 15px 45px rgba(60, 35, 20, 0.12);
+}
+
+.brand-icon {
+    font-size: 42px;
+}
+
+.btn-cafe {
+    background: #75452f;
+    color: white;
+    border: none;
+}
+
+    .btn-cafe:hover {
+        background: #5d3524;
+        color: white;
+    }
+
+.form-control {
+    padding: 12px;
+}

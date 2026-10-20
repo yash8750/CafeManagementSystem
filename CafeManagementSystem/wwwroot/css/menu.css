@@ -1,0 +1,26 @@
+﻿.menu-stat-card {
+    border-radius: 12px;
+}
+
+#menuTableBody td {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.menu-item-name {
+    font-weight: 600;
+    color: #3f3028;
+}
+
+.menu-item-description {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.availability-badge {
+    min-width: 85px;
+}
+
+.menu-action-btn {
+    min-width: 65px;
+}

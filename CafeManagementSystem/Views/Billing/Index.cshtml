@@ -1,0 +1,250 @@
+﻿@{
+    ViewData["Title"] = "Billing & Invoices";
+}
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+<link rel="stylesheet" href="~/css/billing.css" asp-append-version="true" />
+}
+<div class="container-fluid py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <div>
+            <h2 class="fw-bold mb-1">Billing & Invoices</h2>
+            <p class="text-muted mb-0">
+                View invoices, track balances, and print customer receipts.
+            </p>
+        </div>
+
+        <button class="btn btn-outline-primary" onclick="window.print()">
+            <i class="bi bi-printer me-1"></i> Print Invoice
+        </button>
+    </div>
+
+    <!-- Invoice Lookup -->
+    <div class="card border-0 shadow-sm mb-4 no-print">
+        <div class="card-body">
+            <form id="invoiceForm" class="row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label for="orderId" class="form-label fw-semibold">
+                        Order ID
+                    </label>
+                    <input type="number"
+                           id="orderId"
+                           class="form-control"
+                           min="1"
+                           placeholder="Enter order ID, e.g. 1"
+                           required />
+                </div>
+
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-primary px-4" id="searchButton">
+                        Search Invoice
+                    </button>
+                </div>
+
+                <div class="col-md-auto">
+                    <button type="button" class="btn btn-outline-secondary"
+                            onclick="clearInvoice()">
+                        Clear
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Messages -->
+    <div id="messageBox" class="alert d-none" role="alert"></div>
+
+    <!-- Invoice Content -->
+    <div id="invoiceContent" class="d-none">
+
+        <!-- Summary Cards -->
+        <div class="row g-3 mb-4 no-print">
+
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="text-muted small">Invoice Total</div>
+                        <h3 class="fw-bold mb-0 text-primary" id="totalAmount">₹0.00</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="text-muted small">Amount Paid</div>
+                        <h3 class="fw-bold mb-0 text-success" id="amountPaid">₹0.00</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="text-muted small">Balance Due</div>
+                        <h3 class="fw-bold mb-0 text-danger" id="balanceDue">₹0.00</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="text-muted small">Invoice Number</div>
+                        <h5 class="fw-bold mb-0 mt-2" id="invoiceNumberCard">—</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Printable Invoice -->
+        <div class="card border-0 shadow-sm invoice-paper">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Invoice Header -->
+                <div class="row mb-4">
+                    <div class="col-sm-7">
+                        <h2 class="fw-bold mb-1">☕ Cafe Management System</h2>
+                        <p class="text-muted mb-0">Customer Invoice</p>
+                    </div>
+
+                    <div class="col-sm-5 text-sm-end mt-3 mt-sm-0">
+                        <h4 class="fw-bold text-primary mb-1" id="invoiceNumber">—</h4>
+                        <div class="text-muted small">
+                            Invoice for Order #<span id="invoiceOrderId">—</span>
+                        </div>
+                        <div class="text-muted small" id="orderDate">—</div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <!-- Customer and Order Information -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <h6 class="text-muted text-uppercase small fw-bold">
+                            Bill To
+                        </h6>
+                        <div class="fw-semibold" id="customerName">Walk-in Customer</div>
+                        <div class="text-muted small" id="tableNumber"></div>
+                    </div>
+
+                    <div class="col-md-6 text-md-end">
+                        <h6 class="text-muted text-uppercase small fw-bold">
+                            Order Information
+                        </h6>
+                        <div>
+                            Order Type:
+                            <span class="fw-semibold" id="orderType">—</span>
+                        </div>
+                        <div>
+                            Order Status:
+                            <span id="orderStatus" class="badge bg-secondary">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items -->
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Item</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-end">Unit Price</th>
+                                <th class="text-end">Line Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoiceItems">
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">
+                                    No invoice loaded.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Totals -->
+                <div class="row justify-content-end">
+                    <div class="col-md-6 col-lg-5">
+                        <div class="d-flex justify-content-between py-2">
+                            <span class="text-muted">Subtotal</span>
+                            <span class="fw-semibold" id="subtotal">₹0.00</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between py-2">
+                            <span class="text-muted">Tax</span>
+                            <span class="fw-semibold" id="taxAmountDetail">₹0.00</span>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between py-2">
+                            <span class="fw-bold fs-5">Total</span>
+                            <span class="fw-bold fs-5 text-primary" id="totalAmountDetail">
+                                ₹0.00
+                            </span>
+                        </div>
+
+                        <div class="d-flex justify-content-between py-2">
+                            <span class="text-muted">Amount Paid</span>
+                            <span class="text-success fw-semibold" id="amountPaidDetail">
+                                ₹0.00
+                            </span>
+                        </div>
+
+                        <div class="d-flex justify-content-between py-2">
+                            <span class="fw-bold">Balance Due</span>
+                            <span class="fw-bold text-danger" id="balanceDueDetail">
+                                ₹0.00
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment History -->
+                <div class="mt-5">
+                    <h5 class="fw-bold mb-3">Payment History</h5>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Payment ID</th>
+                                    <th>Method</th>
+                                    <th>Status</th>
+                                    <th>Reference</th>
+                                    <th>Date</th>
+                                    <th class="text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentHistory">
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">
+                                        No payment records.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <p class="fw-semibold mb-1">Thank you for visiting!</p>
+                    <p class="text-muted small mb-0">
+                        Please keep this invoice for your records.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section Scripts {
+        <script src="~/js/billing.js" asp-append-version="true"></script>
+    }

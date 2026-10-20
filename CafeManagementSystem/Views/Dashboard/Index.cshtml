@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css" />
+<link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+}
+<div class="dashboard-heading">
+    <div>
+        <h2>Dashboard Overview</h2>
+        <p>Welcome back! Here's what's happening at your cafe.</p>
+    </div>
+
+    <button class="btn btn-outline-secondary" id="refreshDashboard">
+        ↻ Refresh
+    </button>
+
+</div>
+
+<div id="dashboardError" class="alert alert-danger d-none" role="alert"></div>
+
+<div class="row g-4 mt-2">
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="dashboard-card">
+            <div class="dashboard-card-top">
+                <span>Total Orders</span>
+                <span class="dashboard-card-icon orders-icon">▤</span>
+            </div>
+            <h2 id="totalOrders">—</h2>
+            <small>All recorded orders</small>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="dashboard-card">
+            <div class="dashboard-card-top">
+                <span>Completed Orders</span>
+                <span class="dashboard-card-icon completed-icon">✓</span>
+            </div>
+            <h2 id="completedOrders">—</h2>
+            <small>Successfully completed</small>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="dashboard-card">
+            <div class="dashboard-card-top">
+                <span>Pending Orders</span>
+                <span class="dashboard-card-icon pending-icon">◷</span>
+            </div>
+            <h2 id="pendingOrders">—</h2>
+            <small>Awaiting completion</small>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="dashboard-card">
+            <div class="dashboard-card-top">
+                <span>Cancelled Orders</span>
+                <span class="dashboard-card-icon cancelled-icon">×</span>
+            </div>
+            <h2 id="cancelledOrders">—</h2>
+            <small>Cancelled orders</small>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-4 mt-1">
+
+    <div class="col-md-6">
+        <div class="dashboard-card revenue-card">
+            <div class="dashboard-card-top">
+                <span>Total Sales</span>
+                <span class="dashboard-card-icon sales-icon">₹</span>
+            </div>
+            <h2 id="totalSales">—</h2>
+            <small>Sales from completed orders</small>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="dashboard-card revenue-card">
+            <div class="dashboard-card-top">
+                <span>Total Revenue</span>
+                <span class="dashboard-card-icon revenue-icon">↗</span>
+            </div>
+            <h2 id="totalRevenue">—</h2>
+            <small>Revenue from completed payments</small>
+        </div>
+    </div>
+
+</div>
+
+     @section Scripts {
+        <script src="~/js/dashboard.js" asp-append-version="true"></script>
+     }

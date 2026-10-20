@@ -1,0 +1,256 @@
+﻿@{
+    ViewData["Title"] = "Sales Reports";
+}
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+<link rel="stylesheet" href="~/css/reports.css" asp-append-version="true" />
+}
+
+<div class="container-fluid py-4 reports-page">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Sales Reports & Analytics</h2>
+            <p class="text-secondary mb-0">
+                Monitor cafe sales, completed payments, and order performance.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-dark" onclick="loadAllReports()">
+            <i class="bi bi-arrow-clockwise"></i> Refresh Reports
+        </button>
+    </div>
+
+    <!-- Error Message -->
+    <div id="reportError"
+         class="alert alert-danger d-none"
+         role="alert"
+         aria-live="polite"></div>
+
+    <!-- Order Summary Cards -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="report-card">
+                <div class="report-icon icon-purple">
+                    <i class="bi bi-receipt"></i>
+                </div>
+                <p>Total Orders</p>
+                <h3 id="totalOrders">—</h3>
+                <small>All recorded orders</small>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="report-card">
+                <div class="report-icon icon-green">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+                <p>Completed Orders</p>
+                <h3 id="completedOrders">—</h3>
+                <small>Orders marked completed</small>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="report-card">
+                <div class="report-icon icon-orange">
+                    <i class="bi bi-hourglass-split"></i>
+                </div>
+                <p>Pending Orders</p>
+                <h3 id="pendingOrders">—</h3>
+                <small>Orders awaiting completion</small>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="report-card">
+                <div class="report-icon icon-red">
+                    <i class="bi bi-x-circle"></i>
+                </div>
+                <p>Cancelled Orders</p>
+                <h3 id="cancelledOrders">—</h3>
+                <small>Orders marked cancelled</small>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Sales and Revenue Cards -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-6">
+            <div class="revenue-card revenue-sales">
+                <span>Total Sales</span>
+                <h2 id="totalSales">—</h2>
+                <small>
+                    Value of completed orders, including applicable taxes
+                </small>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="revenue-card revenue-income">
+                <span>Total Revenue</span>
+                <h2 id="totalRevenue">—</h2>
+                <small>
+                    Payments currently completed, excluding refunded payments
+                </small>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Daily Report -->
+    <div class="report-panel mb-4">
+
+        <div class="panel-heading">
+            <div>
+                <h5 class="fw-bold mb-1">Daily Sales Report</h5>
+                <p class="text-secondary mb-0">
+                    Review orders and completed payments for a selected date.
+                </p>
+            </div>
+        </div>
+
+        <form id="dailyForm" class="row g-3 align-items-end mb-4">
+
+            <div class="col-md-4">
+                <label for="dailyDate" class="form-label">Select Date</label>
+                <input type="date"
+                       id="dailyDate"
+                       class="form-control"
+                       required />
+            </div>
+
+            <div class="col-md-3">
+                <button class="btn btn-primary w-100" type="submit">
+                    Generate Report
+                </button>
+            </div>
+
+        </form>
+
+        <div id="dailyResult" class="d-none">
+
+            <h6 class="fw-semibold mb-3">
+                Report for <span id="dailyResultDate"></span>
+            </h6>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Total Orders</th>
+                            <th>Completed</th>
+                            <th>Cancelled</th>
+                            <th>Completed Order Sales</th>
+                            <th>Collected Revenue</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td id="dailyOrders">—</td>
+                            <td id="dailyCompleted">—</td>
+                            <td id="dailyCancelled">—</td>
+                            <td id="dailySales">—</td>
+                            <td id="dailyRevenue">—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <small class="text-secondary">
+                Sales are grouped by order creation date.
+                Revenue is grouped by payment creation date.
+            </small>
+
+        </div>
+    </div>
+
+    <!-- Monthly Report -->
+    <div class="report-panel mb-4">
+
+        <div class="panel-heading">
+            <div>
+                <h5 class="fw-bold mb-1">Monthly Sales Report</h5>
+                <p class="text-secondary mb-0">
+                    Review order performance and completed payments for a month.
+                </p>
+            </div>
+        </div>
+
+        <form id="monthlyForm" class="row g-3 align-items-end mb-4">
+
+            <div class="col-md-4">
+                <label for="monthlyDate" class="form-label">Select Month</label>
+                <input type="month"
+                       id="monthlyDate"
+                       class="form-control"
+                       required />
+            </div>
+
+            <div class="col-md-3">
+                <button class="btn btn-primary w-100" type="submit">
+                    Generate Report
+                </button>
+            </div>
+
+        </form>
+
+        <div id="monthlyResult" class="d-none">
+
+            <h6 class="fw-semibold mb-3">
+                Report for <span id="monthlyResultDate"></span>
+            </h6>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Total Orders</th>
+                            <th>Completed</th>
+                            <th>Cancelled</th>
+                            <th>Completed Order Sales</th>
+                            <th>Collected Revenue</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td id="monthlyOrders">—</td>
+                            <td id="monthlyCompleted">—</td>
+                            <td id="monthlyCancelled">—</td>
+                            <td id="monthlySales">—</td>
+                            <td id="monthlyRevenue">—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <small class="text-secondary">
+                Sales are grouped by order creation date.
+                Revenue is grouped by payment creation date.
+            </small>
+
+        </div>
+    </div>
+
+    <!-- Order Status Chart -->
+    <div class="report-panel">
+
+        <h5 class="fw-bold mb-3">Order Status Overview</h5>
+
+        <div style="max-width: 420px; margin: auto;">
+            <canvas id="orderStatusChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="~/js/reports.js" asp-append-version="true"></script>
+}

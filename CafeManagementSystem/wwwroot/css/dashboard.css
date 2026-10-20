@@ -1,0 +1,102 @@
+﻿.dashboard-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+    .dashboard-heading h2 {
+        font-size: 25px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .dashboard-heading p {
+        color: #89837d;
+        margin-bottom: 0;
+        font-size: 14px;
+    }
+
+.dashboard-card {
+    background: #fff;
+    border: 1px solid #ece8e2;
+    border-radius: 14px;
+    padding: 24px;
+    height: 100%;
+    box-shadow: 0 4px 15px rgba(40, 30, 20, 0.025);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(40, 30, 20, 0.07);
+    }
+
+.dashboard-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    color: #77716b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.dashboard-card h2 {
+    margin: 22px 0 8px;
+    font-size: 32px;
+    font-weight: 750;
+    color: #302b27;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-card small {
+    color: #99938c;
+    font-size: 12px;
+}
+
+.dashboard-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.orders-icon {
+    background: #f0e7ff;
+    color: #7852b5;
+}
+
+.completed-icon {
+    background: #e1f6e9;
+    color: #218653;
+}
+
+.pending-icon {
+    background: #fff0d7;
+    color: #b57919;
+}
+
+.cancelled-icon {
+    background: #ffe6e4;
+    color: #cb5148;
+}
+
+.sales-icon {
+    background: #e2efff;
+    color: #3479c5;
+}
+
+.revenue-icon {
+    background: #e1f6e9;
+    color: #218653;
+}
+
+.revenue-card h2 {
+    font-size: 36px;
+}

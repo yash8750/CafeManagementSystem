@@ -1,0 +1,177 @@
+﻿@{
+    ViewData["Title"] = "Menu Management";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css" />
+<link rel="stylesheet" href="~/css/menu.css" asp-append-version="true" />
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Menu Management</h2>
+        <p class="text-muted mb-0">Manage your cafe's menu items and prices.</p>
+    </div>
+
+    <button type="button" class="btn btn-primary" id="addMenuItemBtn">
+        <i class="bi bi-plus-lg me-1"></i> Add Menu Item
+    </button>
+
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <p class="text-muted mb-1">Total Menu Items</p>
+                <h3 class="fw-bold mb-0" id="totalMenuItems">—</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <p class="text-muted mb-1">Available Items</p>
+                <h3 class="fw-bold mb-0 text-success" id="availableMenuItems">—</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <p class="text-muted mb-1">Categories</p>
+                <h3 class="fw-bold mb-0" id="totalCategories">—</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label for="menuSearch" class="form-label fw-semibold">Search menu</label>
+                <input type="search"
+                       id="menuSearch"
+                       class="form-control"
+                       placeholder="Search by item name..." />
+            </div>
+
+            <div class="col-md-4">
+                <label for="categoryFilter" class="form-label fw-semibold">Category</label>
+                <select id="categoryFilter" class="form-select">
+                    <option value="">All Categories</option>
+                </select>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="button" id="refreshMenuBtn"
+                        class="btn btn-outline-secondary w-100">
+                    Refresh
+                </button>
+            </div>
+        </div>
+
+        <div id="menuError" class="alert alert-danger d-none" role="alert"></div>
+        <div id="menuSuccess" class="alert alert-success d-none" role="status"></div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Item</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Availability</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="menuTableBody">
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            Loading menu items...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="small text-muted" id="menuResultCount"></div>
+    </div>
+
+</div>
+
+<!-- Add/Edit Menu Item Modal -->
+
+<div class="modal fade" id="menuItemModal" tabindex="-1"
+     aria-labelledby="menuItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <form id="menuItemForm">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="menuItemModalLabel">
+                        Add Menu Item
+                    </h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="menuItemId" />
+
+                    <div class="mb-3">
+                        <label for="itemName" class="form-label">Item Name</label>
+                        <input type="text" id="itemName" class="form-control"
+                               maxlength="100" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="itemDescription" class="form-label">Description</label>
+                        <textarea id="itemDescription" class="form-control"
+                                  rows="2" maxlength="500"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="itemPrice" class="form-label">Price (₹)</label>
+                        <input type="number" id="itemPrice" class="form-control"
+                               min="0.01" step="0.01" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="itemCategory" class="form-label">Category</label>
+                        <select id="itemCategory" class="form-select" required>
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input type="checkbox" id="itemAvailable"
+                               class="form-check-input" checked />
+                        <label for="itemAvailable" class="form-check-label">
+                            Available for ordering
+                        </label>
+                    </div>
+
+                    <div id="formError" class="alert alert-danger d-none mt-3 mb-0"
+                         role="alert"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" id="saveMenuItemBtn"
+                            class="btn btn-primary">
+                        Save Item
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+<script src="~/js/menu.js" asp-append-version="true"></script>
+}

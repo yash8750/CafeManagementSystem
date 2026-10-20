@@ -1,0 +1,50 @@
+﻿.invoice-paper {
+    border-radius: 12px;
+}
+
+#invoiceItems td,
+#invoiceItems th {
+    padding: 12px;
+}
+
+@media print {
+    body {
+        background: #fff !important;
+    }
+
+    .no-print,
+    nav,
+    header,
+    footer,
+    .navbar,
+    .sidebar {
+        display: none !important;
+    }
+
+    #invoiceContent {
+        display: block !important;
+    }
+
+        #invoiceContent .card {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+    .invoice-paper .card-body {
+        padding: 0 !important;
+    }
+
+    .container-fluid {
+        padding: 0 !important;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+
+    .badge {
+        border: 1px solid #777;
+        color: #000 !important;
+        background: #fff !important;
+    }
+}

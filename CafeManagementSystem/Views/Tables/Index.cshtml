@@ -1,0 +1,194 @@
+﻿@{
+    ViewData["Title"] = "Table Management";
+}
+<div class="container-fluid py-3">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <div>
+            <h2 class="fw-bold mb-1">Table Management</h2>
+            <p class="text-muted mb-0">Manage cafe tables and their availability.</p>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="addTableBtn">
+            + Add Table
+        </button>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Total Tables</p>
+                    <h3 class="fw-bold mb-0" id="totalTables">0</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Available</p>
+                    <h3 class="fw-bold text-success mb-0" id="availableTables">0</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Occupied</p>
+                    <h3 class="fw-bold text-danger mb-0" id="occupiedTables">0</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Reserved</p>
+                    <h3 class="fw-bold text-warning mb-0" id="reservedTables">0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Messages -->
+    <div id="tableError" class="alert alert-danger d-none" role="alert"></div>
+    <div id="tableSuccess" class="alert alert-success d-none" role="alert"></div>
+
+    <!-- Tables Card -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 pt-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-6">
+                    <h5 class="fw-bold mb-0">All Cafe Tables</h5>
+                </div>
+
+                <div class="col-md-6">
+                    <input type="search"
+                           class="form-control"
+                           id="tableSearch"
+                           placeholder="Search by table number or status..."
+                           aria-label="Search tables" />
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Table Number</th>
+                        <th>Seating Capacity</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tableTableBody">
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-muted">
+                            Tables will appear here.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer bg-white text-muted small">
+            Showing <span id="tableResultCount">0</span> tables
+
+            <button type="button"
+                    class="btn btn-sm btn-outline-secondary float-end"
+                    id="refreshTablesBtn">
+                Refresh
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Table Modal -->
+<div class="modal fade" id="tableModal" tabindex="-1"
+     aria-labelledby="tableModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <form id="tableForm">
+
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="tableModalLabel">
+                        Add Table
+                    </h5>
+
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div id="tableFormError"
+                         class="alert alert-danger d-none"
+                         role="alert"></div>
+
+                    <input type="hidden" id="tableId" />
+
+                    <div class="mb-3">
+                        <label for="tableNumber" class="form-label">
+                            Table Number <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               id="tableNumber"
+                               maxlength="50"
+                               required
+                               placeholder="e.g. T-01" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tableCapacity" class="form-label">
+                            Seating Capacity <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="number"
+                               class="form-control"
+                               id="tableCapacity"
+                               min="1"
+                               max="100"
+                               required
+                               placeholder="e.g. 4" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tableStatus" class="form-label">Table Status</label>
+                        <select id="tableStatus" class="form-select" required>
+                            <option value="1" selected>Available</option>
+                            <option value="2">Occupied</option>
+                            <option value="3">Reserved</option>
+                            <option value="4">Cleaning</option>
+                            <option value="5">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-primary"
+                            id="saveTableBtn">
+                        Save Table
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+        <script src="~/js/tables.js" asp-append-version="true"></script>
+}

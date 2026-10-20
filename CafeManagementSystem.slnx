@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="CafeManagementSystem.API/CafeManagementSystem.API.csproj" />
+  <Project Path="CafeManagementSystem.Core/CafeManagementSystem.Core.csproj" />
+  <Project Path="CafeManagementSystem.Infrastructure/CafeManagementSystem.Infrastructure.csproj" />
+  <Project Path="CafeManagementSystem.Tests/CafeManagementSystem.Tests.csproj" />
+  <Project Path="CafeManagementSystem/CafeManagementSystem.csproj" />
+</Solution>

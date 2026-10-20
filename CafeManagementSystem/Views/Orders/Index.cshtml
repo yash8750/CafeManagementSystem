@@ -1,0 +1,284 @@
+﻿@{
+    ViewData["Title"] = "Order Management";
+}
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+<link rel="stylesheet" href="~/css/orders.css" asp-append-version="true" />
+}
+
+<div class="container-fluid orders-page" id="ordersPage">
+
+    <div class="page-header">
+        <div>
+            <h2><i class="bi bi-receipt-cutoff me-2"></i>Order Management</h2>
+            <p class="text-muted mb-0">
+                Manage dine-in and takeaway orders.
+            </p>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn btn-outline-secondary"
+                    id="refreshOrdersBtn">
+                <i class="bi bi-arrow-clockwise me-1"></i>Refresh
+            </button>
+
+            <button type="button" class="btn btn-primary"
+                    id="newOrderBtn">
+                <i class="bi bi-plus-circle me-1"></i>Create Order
+            </button>
+        </div>
+    </div>
+
+    <div id="alertContainer"></div>
+
+    <!-- Statistics -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-xl-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="stat-label">Total Orders</div>
+                    <div class="stat-value" id="totalOrdersCount">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="stat-label">Pending Orders</div>
+                    <div class="stat-value text-warning" id="pendingOrdersCount">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="stat-label">Preparing Orders</div>
+                    <div class="stat-value text-primary" id="preparingOrdersCount">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-xl-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="stat-label">Completed Orders</div>
+                    <div class="stat-value text-success" id="completedOrdersCount">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders table -->
+    <div class="card content-card">
+        <div class="card-body">
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label for="searchOrders" class="form-label">Search Orders</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" id="searchOrders" class="form-control"
+                               placeholder="Search order ID, customer, or table...">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label for="filterStatus" class="form-label">Status</label>
+                    <select id="filterStatus" class="form-select filter-control">
+                        <option value="">All Statuses</option>
+                        <option value="0">Pending</option>
+                        <option value="1">Confirmed</option>
+                        <option value="2">Preparing</option>
+                        <option value="3">Ready</option>
+                        <option value="4">Completed</option>
+                        <option value="5">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label for="filterType" class="form-label">Order Type</label>
+                    <select id="filterType" class="form-select filter-control">
+                        <option value="">All Types</option>
+                        <option value="0">Dine-in</option>
+                        <option value="1">Takeaway</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Type</th>
+                            <th>Table</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="ordersTableBody">
+                        <tr>
+                            <td colspan="8">
+                                <div class="loading-spinner">
+                                    <div class="spinner-border text-primary" role="status"></div>
+                                    <div class="mt-2">Loading orders...</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="ordersCount" class="text-muted small mt-3"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Order Details Modal -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1"
+     aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="orderDetailsBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Order Modal -->
+<div class="modal fade" id="createOrderModal" tabindex="-1"
+     aria-labelledby="createOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="createOrderModalLabel">
+                    <i class="bi bi-cart-plus me-2"></i>Create New Order
+                </h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div id="createOrderAlert"></div>
+
+                <form id="createOrderForm">
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label for="newOrderType" class="form-label">
+                                Order Type <span class="text-danger">*</span>
+                            </label>
+                            <select id="newOrderType" class="form-select" required>
+                                <option value="0">Dine-in</option>
+                                <option value="1">Takeaway</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="newOrderCustomer" class="form-label">Customer</label>
+                            <select id="newOrderCustomer" class="form-select">
+                                <option value="">Walk-in Customer</option>
+                            </select>
+                            <div class="form-text">Customer selection is optional.</div>
+                        </div>
+
+                        <div class="col-md-6" id="orderTableContainer">
+                            <label for="newOrderTable" class="form-label">
+                                Cafe Table <span class="text-danger">*</span>
+                            </label>
+                            <select id="newOrderTable" class="form-select">
+                                <option value="">Select a table</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="newOrderNotes" class="form-label">Order Notes</label>
+                            <textarea id="newOrderNotes" class="form-control"
+                                      rows="2" maxlength="1000"
+                                      placeholder="Optional instructions"></textarea>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0">Order Items</h6>
+                        <button type="button" id="addOrderItemBtn"
+                                class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-plus-circle me-1"></i>Add Item
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="min-width:220px">Menu Item</th>
+                                    <th style="min-width:110px">Unit Price</th>
+                                    <th style="width:120px">Quantity</th>
+                                    <th style="min-width:120px">Line Total</th>
+                                    <th style="width:70px">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody id="newOrderItemsBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div id="noOrderItemsMessage" class="text-center text-muted py-3">
+                        No items added. Click Add Item to begin.
+                    </div>
+
+                    <div class="row justify-content-end mt-4">
+                        <div class="col-md-5 col-lg-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Subtotal</span>
+                                <strong id="newOrderSubtotal">₹0.00</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Estimated Tax</span>
+                                <strong id="newOrderTax">₹0.00</strong>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between fs-5">
+                                <span class="fw-bold">Total</span>
+                                <strong id="newOrderTotal">₹0.00</strong>
+                            </div>
+                            <div class="form-text mt-2">
+                                The API must validate prices and calculate the final amount.
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="createOrderForm"
+                        class="btn btn-primary" id="saveOrderBtn">
+                    <i class="bi bi-check-circle me-1"></i>Create Order
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script src="~/js/orders.js" asp-append-version="true"></script>
+}

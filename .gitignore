@@ -1,0 +1,19 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+slnLaunch.user
+
+# Build output
+**/bin/
+**/obj/
+
+# IDE files
+.idea/
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Logs
+*.log

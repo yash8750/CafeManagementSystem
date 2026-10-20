@@ -1,0 +1,132 @@
+﻿.reports-page {
+    color: #242424;
+}
+
+.report-card {
+    height: 100%;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid #ececf2;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(30, 30, 60, .04);
+}
+
+    .report-card p {
+        color: #737583;
+        margin: 14px 0 5px;
+        font-size: .92rem;
+    }
+
+    .report-card h3 {
+        font-weight: 750;
+        margin-bottom: 7px;
+    }
+
+    .report-card small {
+        color: #8b8d98;
+    }
+
+.report-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    font-size: 1.35rem;
+}
+
+.icon-purple {
+    background: #eee9ff;
+    color: #6c45d8;
+}
+
+.icon-green {
+    background: #e0f7e9;
+    color: #18864b;
+}
+
+.icon-orange {
+    background: #fff0db;
+    color: #c77b12;
+}
+
+.icon-red {
+    background: #ffe6e6;
+    color: #d53b43;
+}
+
+.revenue-card {
+    height: 100%;
+    padding: 25px;
+    border-radius: 16px;
+    color: #fff;
+}
+
+.revenue-sales {
+    background: linear-gradient(120deg, #4934a4, #7865e8);
+}
+
+.revenue-income {
+    background: linear-gradient(120deg, #087f70, #25b99c);
+}
+
+.revenue-card span {
+    font-size: .95rem;
+    opacity: .9;
+}
+
+.revenue-card h2 {
+    font-weight: 750;
+    margin: 10px 0;
+    overflow-wrap: anywhere;
+}
+
+.revenue-card small {
+    opacity: .9;
+}
+
+.report-panel {
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #ececf2;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(30, 30, 60, .04);
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.reports-page .form-control {
+    min-height: 44px;
+}
+
+.reports-page .btn {
+    min-height: 44px;
+    border-radius: 9px;
+}
+
+.reports-page thead th {
+    color: #696b78;
+    font-size: .85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+    .report-panel {
+        padding: 16px;
+    }
+
+    .revenue-card {
+        padding: 20px;
+    }
+
+        .revenue-card h2 {
+            font-size: 1.5rem;
+        }
+}

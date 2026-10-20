@@ -1,0 +1,26 @@
+﻿#customersTableBody td {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.customer-name {
+    font-weight: 600;
+    color: #3f3028;
+}
+
+.customer-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8efff;
+    color: #2458c6;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.customer-action-btn {
+    min-width: 65px;
+}
