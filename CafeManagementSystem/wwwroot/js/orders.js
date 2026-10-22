@@ -10,10 +10,10 @@
         return;
     }
 
-    const ordersApiUrl = "https://localhost:7159/api/Orders";
-    const menuItemsApiUrl = "https://localhost:7159/api/MenuItems";
-    const customersApiUrl = "https://localhost:7159/api/Customers";
-    const tablesApiUrl = "https://localhost:7159/api/Tables";
+    const ordersApiUrl = "https://managecafeapi.runasp.net/api/Orders";
+    const menuItemsApiUrl = "https://managecafeapi.runasp.net/api/MenuItems";
+    const customersApiUrl = "https://managecafeapi.runasp.net/api/Customers";
+    const tablesApiUrl = "https://managecafeapi.runasp.net/api/Tables";
 
     // This matches the 5% tax shown in the existing test orders.
     // The server-calculated total remains authoritative.

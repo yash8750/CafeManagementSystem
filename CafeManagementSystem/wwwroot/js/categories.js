@@ -1,5 +1,4 @@
-﻿const categoriesApiUrl = "https://localhost:7159/api/Categories";
-
+﻿const categoriesApiUrl = "https://managecafeapi.runasp.net/api/Categories";
 let categories = [];
 
 const categoryTableBody =

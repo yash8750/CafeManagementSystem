@@ -1,5 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    const reportUrl = "https://localhost:7159/api/Reports/dashboard";
+    const reportUrl = "https://managecafeapi.runasp.net/api/Reports/dashboard";
 
     const errorBox = document.getElementById("dashboardError");
     const refreshButton = document.getElementById("refreshDashboard");

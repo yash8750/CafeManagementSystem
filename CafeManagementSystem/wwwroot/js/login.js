@@ -11,7 +11,7 @@ loginForm.addEventListener("submit", async function (event) {
 
     try {
         const response = await fetch(
-            "https://localhost:7159/api/Auth/login",
+            "https://managecafeapi.runasp.net/api/Auth/login",
             {
                 method: "POST",
                 headers: {

@@ -1,4 +1,4 @@
-﻿const API_BASE_URL = "https://localhost:7159";
+﻿const API_BASE_URL = "https://managecafeapi.runasp.net";
 const KITCHEN_API = `${API_BASE_URL}/api/Kitchen/orders`;
 const ORDER_STATUS_API = `${API_BASE_URL}/api/Orders`;
 

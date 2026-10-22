@@ -1,5 +1,5 @@
-﻿        const menuApiUrl = "https://localhost:7159/api/MenuItems";
-        const categoriesApiUrl = "https://localhost:7159/api/Categories";
+﻿const menuApiUrl = "https://managecafeapi.runasp.net/api/MenuItems";
+const categoriesApiUrl = "https://managecafeapi.runasp.net/api/Categories";
 
         let menuItems = [];
         let categories = [];

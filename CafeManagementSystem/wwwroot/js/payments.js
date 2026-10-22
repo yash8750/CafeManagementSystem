@@ -1,4 +1,4 @@
-﻿const API_BASE_URL = "https://localhost:7159";
+﻿const API_BASE_URL = "https://managecafeapi.runasp.net";
 const PAYMENT_API = `${API_BASE_URL}/api/Payments`;
 
 let allPayments = [];

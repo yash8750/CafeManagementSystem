@@ -1,5 +1,4 @@
-﻿const customersApiUrl = "https://localhost:7159/api/Customers";
-
+﻿const customersApiUrl = "https://managecafeapi.runasp.net/api/Customers";
 let customers = [];
 
 const customersTableBody = document.getElementById("customersTableBody");

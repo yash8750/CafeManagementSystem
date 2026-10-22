@@ -39,9 +39,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowCafeWeb", policy =>
     {
         policy
-            .WithOrigins("https://localhost:7048")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        .WithOrigins(
+        "https://localhost:7048",
+        "https://managecafe.runasp.net"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 

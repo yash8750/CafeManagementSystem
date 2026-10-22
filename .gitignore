@@ -17,3 +17,19 @@ slnLaunch.user
 
 # Logs
 *.log
+
+# Environment-specific application settings
+
+appsettings.Development.json
+appsettings.Production.json
+
+# Visual Studio publish profiles and deployment settings
+
+*.pubxml
+*.publishsettings
+
+# Local user-specific configuration
+
+secrets.json
+
+**/appsettings.json

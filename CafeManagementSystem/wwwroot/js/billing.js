@@ -1,4 +1,4 @@
-﻿const API_BASE_URL = "https://localhost:7159";
+﻿const API_BASE_URL = "https://managecafeapi.runasp.net";
 
 const invoiceForm = document.getElementById("invoiceForm");
 const invoiceContent = document.getElementById("invoiceContent");

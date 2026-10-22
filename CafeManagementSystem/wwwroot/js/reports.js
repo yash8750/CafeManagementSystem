@@ -1,5 +1,4 @@
-﻿const apiBaseUrl = "https://localhost:7159";
-
+﻿const API_BASE_URL = "https://managecafeapi.runasp.net";
 let orderStatusChart;
 
 let isRedirectingToLogin = false;
@@ -22,7 +21,7 @@ function getAuthHeaders() {
 }
 
 async function apiGet(path) {
-    const response = await fetch(`${apiBaseUrl}${path}`, {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
         method: "GET",
         headers: getAuthHeaders()
     });

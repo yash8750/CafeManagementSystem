@@ -1,5 +1,4 @@
-﻿const tablesApiUrl = "https://localhost:7159/api/Tables";
-
+﻿const tablesApiUrl = "https://managecafeapi.runasp.net/api/Tables";
 let cafeTables = [];
 
 const tableTableBody =
